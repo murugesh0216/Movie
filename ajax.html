@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Info</title>
+    <script>
+        function movie(mname) {
+            var xhttp = new XMLHttpRequest;
+            xhttp.onreadystatechange = function () {
+
+                if (xhttp.readyState < 4) {
+                    document.getElementById("img").style.display = "block";
+                    document.getElementById("info").style.display = "none";
+                    document.getElementById("img").src = "loader.gif";
+
+                }
+                if (xhttp.readyState == 4 && xhttp.status == 200) {
+
+                    var res = JSON.parse(xhttp.responseText);
+                    document.getElementById("img").src = res.Poster;
+                    document.getElementById("1").innerHTML = res.Title;
+                    document.getElementById("2").innerHTML = res.Released;
+                    document.getElementById("3").innerHTML = res.Director;
+                    document.getElementById("4").innerHTML = res.Actors;
+                    document.getElementById("5").innerHTML = res.Plot;
+                    document.getElementById("6").innerHTML = res.Awards;
+                    document.getElementById("7").innerHTML = res.imdbRating;
+                    document.getElementById("info").style.display = "block";
+                    // document.getElementById("mshow").style.display = "block";
+                }
+            }
+            xhttp.open("GET", "http://www.omdbapi.com/?t=" + mname + "&apikey=c429066e", true);
+            xhttp.send();
+        }
+    </script>
+</head>
+
+<body style="background-color: rgb(94, 90, 151)">
+    <div style="margin-left: 35%;">
+        <label><b> Movie Name :</b></label>
+        <input type="text" onblur="movie(this.value)"> <br><br>
+        <img src="" id="img" style="display: none;">
+
+    </div>
+    <br>
+    <div id="info" style="display:none;">
+        <table style="text-align: center;background-color: rgba(76, 58, 241, 0.39);" border="1px">
+            <b>
+                <tr>
+                    <th>Movie Name</th>
+                    <th>Released</th>
+                    <th>Director</th>
+                    <th>Actors</th>
+                    <th>Plot</th>
+                    <th>Awards</th>
+                    <th>ImdbRating</th>
+                </tr>
+                <tr>
+                    <td id="1"></td>
+                    <td id="2"></td>
+                    <td id="3"></td>
+                    <td id="4"></td>
+                    <td id="5"></td>
+                    <td id="6"></td>
+                    <td id="7"></td>
+                </tr>
+            </b>
+        </table>
+    </div>
+</body>
+
+</html>
